@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroSaudade Arcade – Bornes d'arcade artisanales</title>
+    <meta name="description" content="RetroSaudade Arcade : fabrication artisanale de bornes d'arcade et bartops. Kits 1 joueur, 2 joueurs et console portable rétro. Devis sur mesure.">
+
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root {
+            --bg:        #0b0712;
+            --bg-card:   #120a21;
+            --bg-header: #160d29;
+            --yellow:    #ffff00;
+            --cyan:      #00ffcc;
+            --pink:      #ff0055;
+            --white:     #ffffff;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: var(--bg);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background-color: var(--bg-header);
+            border-bottom: 4px solid var(--yellow);
+            padding: 30px 20px 24px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--white);
+            margin: 0 0 6px;
+            font-size: clamp(1.8em, 6vw, 3em);
+            letter-spacing: 3px;
+            text-shadow: 0 0 12px var(--yellow), 0 0 30px var(--pink);
+            animation: flicker 5s infinite;
+        }
+
+        header p {
+            margin: 0;
+            color: var(--yellow);
+            letter-spacing: 2px;
+            font-size: 0.85em;
+        }
+
+        @keyframes flicker {
+            0%, 95%, 100% { opacity: 1; }
+            96%            { opacity: 0.7; }
+            97%            { opacity: 1; }
+            98%            { opacity: 0.5; }
+            99%            { opacity: 1; }
+        }
+
+        /* ─── LAYOUT ─── */
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        /* ─── CARDS ─── */
+        .section {
+            background-color: var(--bg-card);
+            border: 3px solid var(--yellow);
+            padding: 22px 24px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            color: var(--yellow);
+            margin: 0 0 16px;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px var(--yellow), 0 0 20px var(--pink);
+        }
+
+        /* ─── LAYOUT PRODUITS ─── */
+        .products-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .product-list {
+            list-style: none;
+            margin: 0 0 12px;
+            padding: 0;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-list li {
+            margin-bottom: 6px;
+        }
+
+        .product-btn {
+            background: none;
+            border: none;
+            font-family: 'VT323', monospace;
+            font-size: 1em;
+            color: var(--white);
+            cursor: pointer;
+            padding: 0;
+            text-align: left;
+            width: 100%;
+            transition: color 0.15s;
+        }
+
+        .product-btn:hover,
+        .product-btn:focus-visible {
+            color: var(--yellow);
+            outline: none;
+        }
+
+        .product-btn.active {
+            color: var(--yellow);
+        }
+
+        .product-btn .arrow {
+            color: var(--white);
+            transition: color 0.15s;
+        }
+
+        .product-btn.active .arrow {
+            color: #ff2222;
+        }
+
+        .product-btn .price {
+            color: var(--yellow);
+        }
+
+        .product-btn.pocket .price {
+            color: var(--cyan);
+        }
+
+        /* ─── CADRE PHOTO ─── */
+        .photo-frame {
+            width: 220px;
+            flex-shrink: 0;
+            aspect-ratio: 1 / 1;
+            border: 2px solid var(--yellow);
+            box-shadow: 0 0 10px var(--yellow), 0 0 24px #ffff0044;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .photo-frame img.visible {
+            display: block;
+        }
+
+        @media (max-width: 520px) {
+            .products-layout { flex-direction: column; }
+            .photo-frame { width: 100%; aspect-ratio: 4 / 3; }
+        }
+
+        .section p strong {
+            color: var(--yellow);
+        }
+
+        /* ─── CONTACT ─── */
+        .contact-line {
+            margin: 0 0 8px;
+        }
+
+        .highlight { color: var(--yellow); }
+
+        .cta-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #00aaff;
+            text-decoration: none;
+            border: 2px solid #00aaff;
+            background: none;
+            padding: 6px 16px;
+            font-family: 'VT323', monospace;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 0 8px #00aaff, 0 0 18px #00aaff44;
+            text-shadow: 0 0 8px #00aaff;
+            transition: color 0.15s, box-shadow 0.15s;
+        }
+
+        .cta-link:hover,
+        .cta-link:focus-visible {
+            color: #66ccff;
+            box-shadow: 0 0 14px #00aaff, 0 0 30px #00aaff66;
+            outline: none;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 480px) {
+            body { font-size: 19px; }
+            .section { padding: 16px; }
+        }
+
+        /* ─── REDUCED MOTION ─── */
+        @media (prefers-reduced-motion: reduce) {
+            h1 { animation: none; }
+        }
+
+        /* ─── FORMULAIRE DEVIS ─── */
+        .devis-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 480px) {
+            .devis-row { grid-template-columns: 1fr; }
+        }
+        .devis-field {
+            margin-bottom: 14px;
+        }
+        .devis-label {
+            display: block;
+            font-size: 0.7em;
+            color: #aaaaaa;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        .devis-input {
+            width: 100%;
+            background: #0b0712;
+            border: 2px solid #444;
+            color: #ffffff;
+            font-family: 'VT323', monospace;
+            font-size: 0.9em;
+            padding: 8px 10px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        .devis-input:focus {
+            border-color: #ffff00;
+        }
+        .devis-input::placeholder {
+            color: #555;
+        }
+        .devis-error {
+            display: none;
+            font-size: 0.65em;
+            color: #ff4444;
+            margin-top: 3px;
+        }
+        .devis-products {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .devis-product {
+            border: 2px solid #333;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+            display: block;
+        }
+        .devis-product:hover { border-color: #666; }
+        .devis-product.selected {
+            border-color: #ffff00;
+            background: rgba(255,255,0,0.05);
+        }
+        .devis-product input { display: none; }
+        .dpname {
+            font-size: 0.9em;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+        .dpprice {
+            font-size: 0.72em;
+            color: #888;
+            margin-top: 2px;
+        }
+        .devis-product.selected .dpprice { color: #cccc00; }
+        .devis-send {
+            width: 100%;
+            margin-top: 6px;
+            padding: 12px;
+            background: none;
+            border: 2px solid #ffff00;
+            color: #ffff00;
+            font-family: 'VT323', monospace;
+            font-size: 1em;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .devis-send:hover {
+            background: #ffff00;
+            color: #0b0712;
+        }
+        .devis-send:active { transform: scale(0.98); }
+
+        /* ─── OPTIONS ─── */
+        .opts-group {
+            margin-bottom: 14px;
+        }
+        .opts-title {
+            font-size: 0.65em;
+            color: #ffff00;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 3px;
+        }
+        .opt-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85em;
+            color: #cccccc;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+        .opt-line:hover { color: #ffffff; }
+        .opt-line input[type="checkbox"],
+        .opt-line input[type="radio"] {
+            accent-color: #ffff00;
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .opt-price {
+            margin-left: auto;
+            color: #ffff00;
+            font-size: 0.9em;
+        }
+
+        /* ─── TOTAL ─── */
+        .devis-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #ffff00;
+            padding: 10px 16px;
+            margin: 16px 0 4px;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+        }
+        .devis-total span:last-child {
+            color: #ffff00;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>RETROSAUDADE ARCADE</h1>
+    <p>FABRICATION BORNES D'ARCADE &amp; BARTOPS</p>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>NOS MODÈLES (KITS &amp; PORTABLE)</h2>
+        <p>Chaque modèle est préparé avec soin dans notre atelier avec des composants de qualité.</p>
+
+        <div class="products-layout">
+            <ul class="product-list">
+                <li>
+                    <button class="product-btn" onclick="clickPhoto('player-one', this)" onmouseover="hoverPhoto('player-one', this)" onmouseout="unhoverPhoto()">
+                        <span class="arrow">&gt;</span> A – LE PLAYER ONE (1 JOUEUR) : <span class="price">130 €</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="product-btn" onclick="clickPhoto('compact', this)" onmouseover="hoverPhoto('compact', this)" onmouseout="unhoverPhoto()">
+                        <span class="arrow">&gt;</span> B – LE COMPACT (2 JOUEURS) : <span class="price">220 €</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="product-btn" onclick="clickPhoto('authentique', this)" onmouseover="hoverPhoto('authentique', this)" onmouseout="unhoverPhoto()">
+                        <span class="arrow">&gt;</span> C – L'AUTHENTIQUE (2 JOUEURS) : <span class="price">250 €</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="product-btn pocket" onclick="clickPhoto('retropocket', this)" onmouseover="hoverPhoto('retropocket', this)" onmouseout="unhoverPhoto()">
+                        <span class="arrow">&gt;</span> X – CONSOLE PORTABLE RETROPOCKET : <span class="price">89 €</span>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="photo-frame">
+                <img id="img-player-one"  src="player-one.png"  alt="Borne Player One">
+                <img id="img-compact"     src="compact.png"     alt="Borne Compact">
+                <img id="img-authentique" src="authentique.png" alt="Borne Authentique">
+                <img id="img-retropocket" src="retropocket.png" alt="Console RetroPocket">
+            </div>
+        </div>
+
+        <p><strong>Laissez libre cours à vos envies avec nos possibilités de personnalisation.</strong></p>
+    </div>
+
+    <div class="section">
+        <h2>CONTACT</h2>
+        <p class="contact-line">TÉLÉPHONE : <span class="highlight"><strong>06 95 33 55 16</strong></span></p>
+        <p class="contact-line">EMAIL : <span class="highlight"><strong>contact.retrosaudade@gmail.com</strong></span></p>
+        <div style="text-align: center; margin-top: 10px;">
+            <button class="cta-link" onclick="toggleDevis(this)" aria-expanded="false" aria-controls="devis-panel">
+                &gt; DEMANDER UN DEVIS PAR MAIL
+            </button>
+        </div>
+
+        <div id="devis-panel" style="display:none; margin-top: 20px; border-top: 2px solid #333; padding-top: 18px;">
+            <div id="rs-form-card">
+
+                <!-- COORDONNÉES -->
+                <div class="devis-row">
+                    <div class="devis-field">
+                        <label class="devis-label" for="rs-nom">Prénom &amp; nom</label>
+                        <input class="devis-input" type="text" id="rs-nom" placeholder="Jean Dupont">
+                        <span class="devis-error" id="err-nom">Ce champ est requis.</span>
+                    </div>
+                    <div class="devis-field">
+                        <label class="devis-label" for="rs-email">Votre email</label>
+                        <input class="devis-input" type="email" id="rs-email" placeholder="vous@exemple.fr">
+                        <span class="devis-error" id="err-email">Email invalide.</span>
+                    </div>
+                </div>
+
+                <!-- MODÈLE -->
+                <div class="devis-field">
+                    <label class="devis-label">1. CHOISISSEZ VOTRE MODÈLE</label>
+                    <div class="devis-products" id="rs-products">
+                        <label class="devis-product" onclick="toggleProduct(event, this)">
+                            <input type="radio" name="modele" data-price="130" value="Player One (1J) – 130 €">
+                            <div class="dpname">&gt; PLAYER ONE</div>
+                            <div class="dpprice">1 joueur · 130 €</div>
+                        </label>
+                        <label class="devis-product" onclick="toggleProduct(event, this)">
+                            <input type="radio" name="modele" data-price="220" value="Compact (2J) – 220 €">
+                            <div class="dpname">&gt; COMPACT</div>
+                            <div class="dpprice">2 joueurs · 220 €</div>
+                        </label>
+                        <label class="devis-product" onclick="toggleProduct(event, this)">
+                            <input type="radio" name="modele" data-price="250" value="Authentique (2J) – 250 €">
+                            <div class="dpname">&gt; AUTHENTIQUE</div>
+                            <div class="dpprice">2 joueurs · 250 €</div>
+                        </label>
+                        <label class="devis-product" onclick="toggleProduct(event, this)">
+                            <input type="radio" name="modele" data-price="89" value="RetroPocket – 89 €">
+                            <div class="dpname">&gt; RETROPOCKET</div>
+                            <div class="dpprice">Console portable · 89 €</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- OPTIONS -->
+                <div class="devis-field" id="opts-personnalisation">
+                    <label class="devis-label">2. OPTIONS DE PERSONNALISATION</label>
+
+                    <div class="opts-group">
+                        <div class="opts-title">FINITION DU PANNEAU</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="42" data-label="Laminé blanc" onchange="updateTotal()"> Laminé blanc <span class="opt-price">+42 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="49" data-label="Laminé noir" onchange="updateTotal()"> Laminé noir <span class="opt-price">+49 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">U-MOLDING (BORDURES)</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="15" data-label="U-Molding noir" onchange="updateTotal()"> Noir <span class="opt-price">+15 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="15" data-label="U-Molding blanc" onchange="updateTotal()"> Blanc <span class="opt-price">+15 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="15" data-label="U-Molding rouge" onchange="updateTotal()"> Rouge <span class="opt-price">+15 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="15" data-label="U-Molding bleu" onchange="updateTotal()"> Bleu <span class="opt-price">+15 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="14" data-label="U-Molding jaune" onchange="updateTotal()"> Jaune <span class="opt-price">+14 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="14" data-label="U-Molding vert" onchange="updateTotal()"> Vert <span class="opt-price">+14 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="14" data-label="U-Molding rose" onchange="updateTotal()"> Rose <span class="opt-price">+14 €</span></label>
+                    </div>
+
+                   <div class="opts-group">
+                        <div class="opts-title">PACK CONTRÔLES (JOYSTICKS & BOUTONS)</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" id="cb-pack-casual" data-price="70" data-label="Pack Casual Gamer Duo" onchange="updateTotal()"> <span id="txt-pack-casual">Pack Casual Gamer Duo &amp; câblage</span> <span class="opt-price" id="prix-pack-casual">+70 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" id="cb-pack-pro" data-price="170" data-label="Pack Pro Arcade Duo" onchange="updateTotal()"> <span id="txt-pack-pro">Pack Pro Arcade Duo &amp; câblage</span> <span class="opt-price" id="prix-pack-pro">+170 €</span></label>
+                    </div>
+                    <div class="opts-group" id="group-hp">
+                        <div class="opts-title">HAUT-PARLEURS</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="49" data-label="Haut-parleurs 10W avec ampli & câblage" onchange="updateTotal()"> HP 10W avec ampli &amp; câblage <span class="opt-price">+49 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="63" data-label="Haut-parleurs 20W avec ampli & câblage" onchange="updateTotal()"> HP 20W avec ampli &amp; câblage <span class="opt-price">+63 €</span></label>
+                    </div>
+
+                    <div class="opts-group" id="group-grilles-hp">
+                        <div class="opts-title">GRILLES HAUT-PARLEURS</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="11" data-label="Grilles HP noires" onchange="updateTotal()"> Noires <span class="opt-price">+11 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="11" data-label="Grilles HP grises" onchange="updateTotal()"> Grises <span class="opt-price">+11 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="11" data-label="Grilles HP blanches" onchange="updateTotal()"> Blanches <span class="opt-price">+11 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="11" data-label="Grilles HP dorées" onchange="updateTotal()"> Dorées <span class="opt-price">+11 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="11" data-label="Grilles HP chromées" onchange="updateTotal()"> Chromées <span class="opt-price">+11 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">ACRYLIQUES DE PROTECTION</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="28" data-label="Acrylique écran" onchange="updateTotal()"> Acrylique écran <span class="opt-price">+28 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="28" data-label="Acrylique CPO supérieur" onchange="updateTotal()"> Acrylique CPO supérieur <span class="opt-price">+28 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="17" data-label="Acrylique CPO inférieur" onchange="updateTotal()"> Acrylique CPO inférieur <span class="opt-price">+17 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">VINYLE DÉCORATIF</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="70" data-label="Vinyle décoratif thématique (au choix)" onchange="updateTotal()"> Vinyle thématique (au choix) <span class="opt-price">+70 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">ÉLECTRONIQUE</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" id="cb-ecran" data-price="150" data-label="Écran HD 24 pouces" onchange="updateTotal()"> <span id="txt-ecran">Écran HD 24 pouces</span> <span class="opt-price" id="prix-ecran">+150 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="130" data-label="PC Configuration Basic" onchange="updateTotal()"> PC Configuration Basic <span class="opt-price">+130 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="250" data-label="PC Configuration Premium" onchange="updateTotal()"> PC Configuration Premium <span class="opt-price">+250 €</span></label>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="21" data-label="Multiprise 4 prises interne" onchange="updateTotal()"> Multiprise 4 prises interne <span class="opt-price">+21 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">LIVRAISON</div>
+                        <label class="opt-line"><input type="radio" name="livraison" class="opt-cb" data-price="0" data-label="Retrait sur place" onchange="updateTotal()" checked> Retrait sur place <span class="opt-price">Gratuit</span></label>
+                        <label class="opt-line"><input type="radio" name="livraison" class="opt-cb" data-price="25" data-label="Livraison Colissimo" onchange="updateTotal()"> Livraison Colissimo <span class="opt-price">+25 €</span></label>
+                    </div>
+
+                    <div class="opts-group">
+                        <div class="opts-title">MAIN D'OEUVRE</div>
+                        <label class="opt-line"><input type="checkbox" class="opt-cb" data-price="200" data-label="Main d'oeuvre" onchange="updateTotal()"> Main d'oeuvre <span class="opt-price">+200 €</span></label>
+                    </div>
+                </div>
+
+                <!-- TOTAL ESTIMÉ -->
+                <div class="devis-total">
+                    <span>TOTAL ESTIMÉ</span>
+                    <span id="devis-total-amount">0 €</span>
+                </div>
+                <p style="font-size:0.65em; color:#888; margin: 4px 0 16px; text-align:right;">TVA non applicable – art. 293B CGI · Main d'œuvre incluse</p>
+
+                <!-- MESSAGE -->
+                <div class="devis-field">
+                    <label class="devis-label" for="rs-msg">3. MESSAGE / THÈME DU VINYLE / AUTRES DEMANDES</label>
+                    <textarea class="devis-input" id="rs-msg" rows="3" placeholder="Ex: vinyle Street Fighter, couleur U-molding jaune, thème personnalisé..."></textarea>
+                </div>
+
+                <button class="devis-send" onclick="sendDevis()">
+                    &gt; GÉNÉRER LE DEVIS &amp; ENVOYER PAR MAIL
+                </button>
+            </div>
+
+            <div id="rs-success" style="display:none; text-align:center; padding: 20px 0;">
+                <p style="color: #00ffcc; font-size: 1.3em; margin: 0 0 8px;">✓ DEVIS GÉNÉRÉ !</p>
+                <p style="color: #ffffff; font-size: 0.9em; margin: 0 0 14px;">Le devis s'est ouvert dans un nouvel onglet.<br>Imprimez-le ou sauvegardez-le en PDF, puis envoyez-le par mail.</p>
+                <button class="devis-send" style="width:auto; padding: 8px 24px;" onclick="resetDevis()">
+                    &gt; NOUVEAU DEVIS
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /* ─── TOGGLE PANNEAU DEVIS ─── */
+    function toggleDevis(btn) {
+        const panel = document.getElementById('devis-panel');
+        const isOpen = panel.style.display !== 'none';
+        panel.style.display = isOpen ? 'none' : 'block';
+        btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        // FIX : utiliser innerHTML pour conserver les entités HTML
+        btn.innerHTML = isOpen ? '&gt; DEMANDER UN DEVIS PAR MAIL' : '&gt; FERMER LE FORMULAIRE';
+    }
+
+    /* ─── SÉLECTION PRODUIT ─── */
+    function toggleProduct(event, el) {
+        event.preventDefault();
+        const radio = el.querySelector('input[type="radio"]');
+        const isAlreadySelected = el.classList.contains('selected');
+        document.querySelectorAll('#rs-products .devis-product').forEach(p => {
+            p.classList.remove('selected');
+            p.querySelector('input').checked = false;
+        });
+        if (!isAlreadySelected) {
+            el.classList.add('selected');
+            radio.checked = true;
+        }
+        const isRetroPocket = radio.value === 'RetroPocket – 89 €';
+        const optsPanel = document.getElementById('opts-personnalisation');
+        if (!isAlreadySelected && isRetroPocket) {
+            document.querySelectorAll('#opts-personnalisation .opt-cb[type="checkbox"]').forEach(cb => { cb.checked = false; });
+            const livraisonGratuit = document.querySelector('#opts-personnalisation .opt-cb[type="radio"][data-price="0"]');
+            if (livraisonGratuit) livraisonGratuit.checked = true;
+            optsPanel.style.display = 'none';
+        } else {
+            optsPanel.style.display = '';
+        }
+
+        // Player One = packs Solo + prix divisés par 2 + écran 10,1 inclus + masquer HP & Grilles HP
+        const isSolo = !isAlreadySelected && (radio.value === 'Player One (1J) – 130 €');
+
+        // Noms & prix packs contrôles
+        const txtCasual   = document.getElementById('txt-pack-casual');
+        const txtPro      = document.getElementById('txt-pack-pro');
+        const cbCasual    = document.getElementById('cb-pack-casual');
+        const cbPro       = document.getElementById('cb-pack-pro');
+        const prixCasual  = document.getElementById('prix-pack-casual');
+        const prixProEl   = document.getElementById('prix-pack-pro');
+        if (txtCasual) {
+            txtCasual.innerHTML = isSolo ? 'Pack Casual Gamer Solo &amp; câblage' : 'Pack Casual Gamer Duo &amp; câblage';
+            if (cbCasual) {
+                cbCasual.dataset.label = isSolo ? 'Pack Casual Gamer Solo' : 'Pack Casual Gamer Duo';
+                cbCasual.dataset.price = isSolo ? '35' : '70';
+            }
+            if (prixCasual) prixCasual.textContent = isSolo ? '+35 €' : '+70 €';
+        }
+        if (txtPro) {
+            txtPro.innerHTML = isSolo ? 'Pack Pro Arcade Solo &amp; câblage' : 'Pack Pro Arcade Duo &amp; câblage';
+            if (cbPro) {
+                cbPro.dataset.label = isSolo ? 'Pack Pro Arcade Solo' : 'Pack Pro Arcade Duo';
+                cbPro.dataset.price = isSolo ? '85' : '170';
+            }
+            if (prixProEl) prixProEl.textContent = isSolo ? '+85 €' : '+170 €';
+        }
+
+        // Écran : 10,1 pouces inclus si Player One, sinon 24 pouces HD +150€
+        const cbEcran   = document.getElementById('cb-ecran');
+        const txtEcran  = document.getElementById('txt-ecran');
+        const prixEcran = document.getElementById('prix-ecran');
+        if (cbEcran && txtEcran && prixEcran) {
+            if (isSolo) {
+                txtEcran.textContent = 'Écran 10,1 pouces';
+                cbEcran.dataset.label = 'Écran 10,1 pouces';
+                cbEcran.dataset.price = '120';
+                prixEcran.textContent = '+120 €';
+                prixEcran.style.color = '';
+            } else {
+                txtEcran.textContent = 'Écran HD 24 pouces';
+                cbEcran.dataset.label = 'Écran HD 24 pouces';
+                cbEcran.dataset.price = '150';
+                prixEcran.textContent = '+150 €';
+                prixEcran.style.color = '';
+            }
+        }
+
+        // Masquer/afficher sections Haut-parleurs et Grilles HP
+        const groupHp       = document.getElementById('group-hp');
+        const groupGrillesHp = document.getElementById('group-grilles-hp');
+        if (groupHp)        groupHp.style.display        = isSolo ? 'none' : '';
+        if (groupGrillesHp) groupGrillesHp.style.display = isSolo ? 'none' : '';
+        // Décocher les HP si on passe en Player One
+        if (isSolo) {
+            if (groupHp)        groupHp.querySelectorAll('.opt-cb').forEach(cb => { cb.checked = false; });
+            if (groupGrillesHp) groupGrillesHp.querySelectorAll('.opt-cb').forEach(cb => { cb.checked = false; });
+        }
+
+        updateTotal();
+    }
+
+    /* ─── CALCUL TOTAL ─── */
+    function updateTotal() {
+        let total = 0;
+        const selectedProduct = document.querySelector('#rs-products .devis-product.selected input');
+        if (selectedProduct) total += parseInt(selectedProduct.dataset.price) || 0;
+        document.querySelectorAll('.opt-cb[type="checkbox"]:checked').forEach(cb => {
+            total += parseInt(cb.dataset.price) || 0;
+        });
+        const livraison = document.querySelector('.opt-cb[type="radio"]:checked');
+        if (livraison) total += parseInt(livraison.dataset.price) || 0;
+        document.getElementById('devis-total-amount').textContent = total + ' €';
+    }
+
+    function showError(id, show) {
+        document.getElementById(id).style.display = show ? 'block' : 'none';
+    }
+
+    function resetDevis() {
+        document.getElementById('rs-form-card').style.display = 'block';
+        document.getElementById('rs-success').style.display = 'none';
+    }
+
+    /* ─── GÉNÉRATION DU DEVIS ─── */
+    function sendDevis() {
+        const nom = document.getElementById('rs-nom').value.trim();
+        const email = document.getElementById('rs-email').value.trim();
+        const msg = document.getElementById('rs-msg').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let valid = true;
+
+        showError('err-nom', !nom);
+        if (!nom) valid = false;
+        showError('err-email', !emailRegex.test(email));
+        if (!emailRegex.test(email)) valid = false;
+        if (!valid) return;
+
+        const modeles = [...document.querySelectorAll('#rs-products input:checked')].map(cb => ({
+            label: cb.value,
+            price: parseInt(cb.dataset.price) || 0
+        }));
+
+        const optionsRaw = [...document.querySelectorAll('.opt-cb:checked')].map(cb => ({
+            label: cb.dataset.label,
+            price: parseInt(cb.dataset.price) || 0
+        }));
+
+        const totalStr = document.getElementById('devis-total-amount').textContent;
+
+        const now = new Date();
+        const devisNum = 'RS-' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+        const dateStr = now.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Sécurisation des chaînes pour injection dans le HTML
+        const safeNom   = nom.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const safeEmail = email.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const safeMsg   = msg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+        let rowsHtml = '';
+
+        if (modeles.length > 0) {
+            rowsHtml += '<tr><td colspan="3" style="padding:10px 14px 4px;font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #2a2a2a;">Modèle(s) sélectionné(s)</td></tr>';
+            modeles.forEach(function(m) {
+                rowsHtml += '<tr><td style="padding:8px 14px;color:#fff;">' + m.label + '</td><td style="padding:8px 14px;text-align:center;color:#aaa;">1</td><td style="padding:8px 14px;text-align:right;color:#ffff00;">' + m.price + ' €</td></tr>';
+            });
+        }
+
+        if (optionsRaw.length > 0) {
+            rowsHtml += '<tr><td colspan="3" style="padding:14px 14px 4px;font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #2a2a2a;">Options de personnalisation</td></tr>';
+            optionsRaw.forEach(function(o) {
+                rowsHtml += '<tr><td style="padding:8px 14px;color:#ccc;">' + o.label + '</td><td style="padding:8px 14px;text-align:center;color:#aaa;">1</td><td style="padding:8px 14px;text-align:right;color:#ffff00;">+' + o.price + ' €</td></tr>';
+            });
+        }
+
+        if (modeles.length === 0 && optionsRaw.length === 0) {
+            rowsHtml += '<tr><td colspan="3" style="padding:16px 14px;color:#666;text-align:center;">Aucun produit sélectionné</td></tr>';
+        }
+
+        const msgRow = safeMsg ? '<div style="margin-top:28px;border:1px solid #2a2a2a;padding:16px 20px;background:#0f0f0f;"><div style="font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Message / Demandes particulières</div><div style="color:#ccc;font-size:15px;line-height:1.6;white-space:pre-wrap;">' + safeMsg + '</div></div>' : '';
+
+        // Données pour le script de mail dans le devis — sérialisées en JSON pour éviter les injections
+        const mailData = {
+            devisNum: devisNum,
+            nom: nom,
+            totalStr: totalStr,
+            modelesList: modeles.map(function(m){ return m.label; }).join(', ') || 'Aucun modèle sélectionné',
+            optsList: optionsRaw.length ? optionsRaw.map(function(o){ return '– ' + o.label + ' : +' + o.price + ' €'; }).join('\n') : '',
+            msg: msg
+        };
+
+        const invoiceHtml = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<title>Devis ' + devisNum + ' \u2013 RetroSaudade Arcade<\/title>\n'
+            + '<style>\n'
+            + '@import url(\'https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap\');\n'
+            + '* { box-sizing: border-box; margin: 0; padding: 0; }\n'
+            + 'body { background: #0b0b0b; color: #ffffff; font-family: \'Share Tech Mono\', \'Courier New\', monospace; font-size: 15px; padding: 0; }\n'
+            + '.page { max-width: 780px; margin: 0 auto; padding: 40px 32px 60px; }\n'
+            + '.brand { font-family: \'VT323\', monospace; font-size: 42px; color: #fff; letter-spacing: 4px; text-shadow: 0 0 14px #ffff00, 0 0 30px #ff0055; line-height: 1; }\n'
+            + '.brand-sub { font-size: 11px; color: #888; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }\n'
+            + '.header-bar { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #ffff00; padding-bottom: 20px; margin-bottom: 28px; }\n'
+            + '.devis-meta { text-align: right; }\n'
+            + '.devis-meta .label { font-size: 10px; color: #666; letter-spacing: 2px; text-transform: uppercase; }\n'
+            + '.devis-meta .value { font-size: 22px; color: #ffff00; font-family: \'VT323\', monospace; letter-spacing: 2px; }\n'
+            + '.devis-meta .date { font-size: 13px; color: #888; margin-top: 4px; }\n'
+            + '.parties { display: flex; gap: 32px; margin-bottom: 32px; }\n'
+            + '.party { flex: 1; border: 1px solid #222; padding: 14px 18px; background: #111; }\n'
+            + '.party-title { font-size: 10px; color: #666; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }\n'
+            + '.party-name { font-size: 18px; color: #fff; font-family: \'VT323\', monospace; letter-spacing: 1px; }\n'
+            + '.party-detail { font-size: 13px; color: #888; margin-top: 4px; }\n'
+            + 'table { width: 100%; border-collapse: collapse; margin-bottom: 0; }\n'
+            + 'thead tr { background: #1a1a1a; border-bottom: 2px solid #ffff00; }\n'
+            + 'thead th { padding: 10px 14px; font-size: 10px; letter-spacing: 2px; color: #ffff00; text-transform: uppercase; font-weight: normal; }\n'
+            + 'thead th:last-child { text-align: right; } thead th:nth-child(2) { text-align: center; }\n'
+            + 'tbody tr { border-bottom: 1px solid #1a1a1a; }\n'
+            + '.total-block { border-top: 2px solid #333; }\n'
+            + '.total-row { display: flex; justify-content: flex-end; gap: 60px; padding: 10px 14px; border-bottom: 1px solid #1a1a1a; font-size: 14px; color: #aaa; }\n'
+            + '.total-row span:last-child { min-width: 80px; text-align: right; color: #ddd; }\n'
+            + '.total-row.final { background: #1a1a00; border: 2px solid #ffff00; padding: 14px 18px; margin-top: 8px; font-size: 18px; color: #fff; font-family: \'VT323\', monospace; letter-spacing: 1px; }\n'
+            + '.total-row.final span:last-child { color: #ffff00; font-size: 22px; }\n'
+            + '.tva-note { text-align: right; font-size: 11px; color: #555; padding: 6px 14px 0; letter-spacing: 1px; }\n'
+            + '.footer { margin-top: 40px; border-top: 1px solid #222; padding-top: 16px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #555; }\n'
+            + '.validity { font-size: 12px; color: #555; margin-top: 8px; text-align: center; letter-spacing: 1px; }\n'
+            + '.actions { display: flex; gap: 12px; justify-content: center; padding: 20px 0 10px; background: #0b0b0b; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #222; margin-bottom: 10px; }\n'
+            + '.btn { font-family: \'VT323\', monospace; font-size: 18px; letter-spacing: 1px; padding: 8px 24px; cursor: pointer; border: 2px solid; background: none; transition: background 0.15s, color 0.15s; }\n'
+            + '.btn-print { color: #ffff00; border-color: #ffff00; } .btn-print:hover { background: #ffff00; color: #0b0b0b; }\n'
+            + '.btn-mail { color: #00aaff; border-color: #00aaff; } .btn-mail:hover { background: #00aaff; color: #0b0b0b; }\n'
+            + '@media print { .actions { display: none !important; } body { background: #fff; color: #000; } .brand { text-shadow: none; color: #000; } .devis-meta .value { color: #000; } .party { background: #f5f5f5; border-color: #ccc; } table { color: #000; } thead tr { background: #eee; } thead th { color: #000; } tbody tr td { color: #333 !important; } .total-row.final { background: #f0f0e0; border-color: #999; } .total-row.final span:last-child { color: #000; } .footer { color: #999; border-color: #ddd; } }\n'
+            + '<\/style>\n'
+            + '<\/head>\n<body>\n'
+            + '<div class="actions">'
+            + '<button class="btn btn-print" onclick="window.print()">\u238c IMPRIMER / SAUVEGARDER PDF<\/button>'
+            + '<button class="btn btn-mail" onclick="sendMail()">\u2709 ENVOYER PAR MAIL<\/button>'
+            + '<\/div>\n'
+            + '<div class="page">\n'
+            + '<div class="header-bar">'
+            + '<div><div class="brand">RETROSAUDADE<\/div><div class="brand-sub">Fabrication bornes d\'arcade &amp; bartops<\/div>'
+            + '<div style="margin-top:10px;font-size:13px;color:#555;line-height:1.7;">contact.retrosaudade@gmail.com<br>06 95 33 55 16<\/div><\/div>'
+            + '<div class="devis-meta"><div class="label">Devis n\u00b0<\/div><div class="value">' + devisNum + '<\/div><div class="date">\u00c9mis le ' + dateStr + '<\/div><div class="date" style="margin-top:6px;color:#555;">Valable 30 jours<\/div><\/div>'
+            + '<\/div>\n'
+            + '<div class="parties">'
+            + '<div class="party"><div class="party-title">De la part de<\/div><div class="party-name">RetroSaudade Arcade<\/div><div class="party-detail">Artisan \u2013 Auto-entrepreneur<\/div><div class="party-detail">TVA non applicable \u2013 art. 293B CGI<\/div><\/div>'
+            + '<div class="party"><div class="party-title">Devis \u00e9tabli pour<\/div><div class="party-name">' + safeNom + '<\/div><div class="party-detail">' + safeEmail + '<\/div><\/div>'
+            + '<\/div>\n'
+            + '<table><thead><tr><th style="text-align:left;">D\u00e9signation<\/th><th>Qt\u00e9<\/th><th style="text-align:right;">Prix unitaire<\/th><\/tr><\/thead><tbody>' + rowsHtml + '<\/tbody><\/table>\n'
+            + '<div class="total-block"><div class="total-row final"><span>TOTAL ESTIM\u00c9<\/span><span>' + totalStr + '<\/span><\/div><div class="tva-note">TVA non applicable \u2013 art. 293B CGI \u00b7 Main d\'\u0153uvre incluse<\/div><\/div>\n'
+            + msgRow
+            + '<div class="validity">Ce devis est valable 30 jours \u00e0 compter de sa date d\'\u00e9mission.<\/div>\n'
+            + '<div class="footer"><div>RetroSaudade Arcade \u00b7 contact.retrosaudade@gmail.com \u00b7 06 95 33 55 16<\/div><div>' + devisNum + '<\/div><\/div>\n'
+            + '<\/div>\n'
+            + '<script>\n'
+            + 'var _mailData = ' + JSON.stringify(mailData) + ';\n'
+            + 'function sendMail() {\n'
+            + '  var subject = encodeURIComponent("Devis " + _mailData.devisNum + " \u2013 " + _mailData.nom + " \u2013 RetroSaudade Arcade");\n'
+            + '  var lines = ["Bonjour,", "", "Veuillez trouver ci-joint ma demande de devis (n\u00b0 " + _mailData.devisNum + ") :", "", "MOD\u00c8LE(S) :", _mailData.modelesList, ""];\n'
+            + '  if (_mailData.optsList) { lines.push("OPTIONS :"); lines.push(_mailData.optsList); lines.push(""); }\n'
+            + '  lines.push("TOTAL ESTIM\u00c9 : " + _mailData.totalStr);\n'
+            + '  lines.push("");\n'
+            + '  if (_mailData.msg) { lines.push("REMARQUES / DEMANDES :"); lines.push(_mailData.msg); lines.push(""); }\n'
+            + '  lines.push("Cordialement,"); lines.push(_mailData.nom);\n'
+            + '  window.location.href = "mailto:contact.retrosaudade@gmail.com?subject=" + subject + "&body=" + encodeURIComponent(lines.join("\\n"));\n'
+            + '}\n'
+            + '<\/script>\n'
+            + '<\/body>\n<\/html>';
+
+        const win = window.open('', '_blank');
+        if (win) {
+            win.document.write(invoiceHtml);
+            win.document.close();
+        } else {
+            alert("Le navigateur a bloqué l'ouverture du devis. Autorisez les popups pour ce site.");
+            return;
+        }
+
+        document.getElementById('rs-form-card').style.display = 'none';
+        document.getElementById('rs-success').style.display = 'block';
+    }
+
+    /* ─── PHOTOS PRODUITS ─── */
+    var lockedId = null;
+
+    function showPhoto(id, btn) {
+        document.querySelectorAll('.photo-frame img').forEach(function(img) { img.classList.remove('visible'); });
+        document.querySelectorAll('.product-btn').forEach(function(b) { b.classList.remove('active'); });
+        var img = document.getElementById('img-' + id);
+        if (img) img.classList.add('visible');
+        if (btn) btn.classList.add('active');
+    }
+
+    function clickPhoto(id, btn) {
+        if (lockedId === id) {
+            lockedId = null;
+            document.querySelectorAll('.photo-frame img').forEach(function(img) { img.classList.remove('visible'); });
+            document.querySelectorAll('.product-btn').forEach(function(b) { b.classList.remove('active'); });
+        } else {
+            lockedId = id;
+            showPhoto(id, btn);
+        }
+    }
+
+    function hoverPhoto(id, btn) {
+        if (lockedId) return;
+        showPhoto(id, btn);
+    }
+
+    function unhoverPhoto() {
+        if (lockedId) return;
+        document.querySelectorAll('.photo-frame img').forEach(function(img) { img.classList.remove('visible'); });
+        document.querySelectorAll('.product-btn').forEach(function(b) { b.classList.remove('active'); });
+    }
+</script>
+
+</body>
+</html>
