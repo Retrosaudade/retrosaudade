@@ -312,6 +312,10 @@
             color: #0b0712;
         }
         .devis-send:active { transform: scale(0.98); }
+        .devis-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
         /* ─── OPTIONS ─── */
         .opts-group {
@@ -554,14 +558,14 @@
                     <textarea class="devis-input" id="rs-msg" rows="3" placeholder="Ex: vinyle Street Fighter, couleur U-molding jaune, thème personnalisé..."></textarea>
                 </div>
 
-                <button class="devis-send" onclick="sendDevis()">
+                <button class="devis-send" id="rs-send-btn" onclick="sendDevis()">
                     &gt; GÉNÉRER LE DEVIS &amp; ENVOYER PAR MAIL
                 </button>
             </div>
 
             <div id="rs-success" style="display:none; text-align:center; padding: 20px 0;">
                 <p style="color: #00ffcc; font-size: 1.3em; margin: 0 0 8px;">✓ DEVIS GÉNÉRÉ !</p>
-                <p style="color: #ffffff; font-size: 0.9em; margin: 0 0 14px;">Le devis s'est ouvert dans un nouvel onglet.<br>Imprimez-le ou sauvegardez-le en PDF, puis envoyez-le par mail.</p>
+                <p style="color: #ffffff; font-size: 0.9em; margin: 0 0 14px;">Le devis s'est ouvert dans un nouvel onglet.<br>Imprimez-le ou sauvegardez-le en PDF.<br><strong>Un email a été envoyé automatiquement à contact.retrosaudade@gmail.com.</strong></p>
                 <button class="devis-send" style="width:auto; padding: 8px 24px;" onclick="resetDevis()">
                     &gt; NOUVEAU DEVIS
                 </button>
@@ -746,16 +750,7 @@
 
         const msgRow = safeMsg ? '<div style="margin-top:28px;border:1px solid #2a2a2a;padding:16px 20px;background:#0f0f0f;"><div style="font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Message / Demandes particulières</div><div style="color:#ccc;font-size:15px;line-height:1.6;white-space:pre-wrap;">' + safeMsg + '</div></div>' : '';
 
-        // Données pour le script de mail dans le devis — sérialisées en JSON pour éviter les injections
-        const mailData = {
-            devisNum: devisNum,
-            nom: nom,
-            totalStr: totalStr,
-            modelesList: modeles.map(function(m){ return m.label; }).join(', ') || 'Aucun modèle sélectionné',
-            optsList: optionsRaw.length ? optionsRaw.map(function(o){ return '– ' + o.label + ' : +' + o.price + ' €'; }).join('\n') : '',
-            msg: msg
-        };
-
+        /* ─── GÉNÉRATION DU PDF/DEVIS (onglet imprimable, sans bouton mail) ─── */
         const invoiceHtml = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<title>Devis ' + devisNum + ' \u2013 RetroSaudade Arcade<\/title>\n'
             + '<style>\n'
             + '@import url(\'https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap\');\n'
@@ -790,13 +785,11 @@
             + '.actions { display: flex; gap: 12px; justify-content: center; padding: 20px 0 10px; background: #0b0b0b; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #222; margin-bottom: 10px; }\n'
             + '.btn { font-family: \'VT323\', monospace; font-size: 18px; letter-spacing: 1px; padding: 8px 24px; cursor: pointer; border: 2px solid; background: none; transition: background 0.15s, color 0.15s; }\n'
             + '.btn-print { color: #ffff00; border-color: #ffff00; } .btn-print:hover { background: #ffff00; color: #0b0b0b; }\n'
-            + '.btn-mail { color: #00aaff; border-color: #00aaff; } .btn-mail:hover { background: #00aaff; color: #0b0b0b; }\n'
             + '@media print { .actions { display: none !important; } body { background: #fff; color: #000; } .brand { text-shadow: none; color: #000; } .devis-meta .value { color: #000; } .party { background: #f5f5f5; border-color: #ccc; } table { color: #000; } thead tr { background: #eee; } thead th { color: #000; } tbody tr td { color: #333 !important; } .total-row.final { background: #f0f0e0; border-color: #999; } .total-row.final span:last-child { color: #000; } .footer { color: #999; border-color: #ddd; } }\n'
             + '<\/style>\n'
             + '<\/head>\n<body>\n'
             + '<div class="actions">'
             + '<button class="btn btn-print" onclick="window.print()">\u238c IMPRIMER / SAUVEGARDER PDF<\/button>'
-            + '<button class="btn btn-mail" onclick="sendMail()">\u2709 ENVOYER PAR MAIL<\/button>'
             + '<\/div>\n'
             + '<div class="page">\n'
             + '<div class="header-bar">'
@@ -814,21 +807,9 @@
             + '<div class="validity">Ce devis est valable 30 jours \u00e0 compter de sa date d\'\u00e9mission.<\/div>\n'
             + '<div class="footer"><div>RetroSaudade Arcade \u00b7 contact.retrosaudade@gmail.com \u00b7 06 95 33 55 16<\/div><div>' + devisNum + '<\/div><\/div>\n'
             + '<\/div>\n'
-            + '<script>\n'
-            + 'var _mailData = ' + JSON.stringify(mailData) + ';\n'
-            + 'function sendMail() {\n'
-            + '  var subject = encodeURIComponent("Devis " + _mailData.devisNum + " \u2013 " + _mailData.nom + " \u2013 RetroSaudade Arcade");\n'
-            + '  var lines = ["Bonjour,", "", "Veuillez trouver ci-joint ma demande de devis (n\u00b0 " + _mailData.devisNum + ") :", "", "MOD\u00c8LE(S) :", _mailData.modelesList, ""];\n'
-            + '  if (_mailData.optsList) { lines.push("OPTIONS :"); lines.push(_mailData.optsList); lines.push(""); }\n'
-            + '  lines.push("TOTAL ESTIM\u00c9 : " + _mailData.totalStr);\n'
-            + '  lines.push("");\n'
-            + '  if (_mailData.msg) { lines.push("REMARQUES / DEMANDES :"); lines.push(_mailData.msg); lines.push(""); }\n'
-            + '  lines.push("Cordialement,"); lines.push(_mailData.nom);\n'
-            + '  window.location.href = "mailto:contact.retrosaudade@gmail.com?subject=" + subject + "&body=" + encodeURIComponent(lines.join("\\n"));\n'
-            + '}\n'
-            + '<\/script>\n'
             + '<\/body>\n<\/html>';
 
+        // 1. Ouvre le devis dans un nouvel onglet (impression / sauvegarde PDF)
         const win = window.open('', '_blank');
         if (win) {
             win.document.write(invoiceHtml);
@@ -838,8 +819,45 @@
             return;
         }
 
-        document.getElementById('rs-form-card').style.display = 'none';
-        document.getElementById('rs-success').style.display = 'block';
+        // 2. Envoi automatique du devis par email via Formspree
+        const sendBtn = document.getElementById('rs-send-btn');
+        if (sendBtn) {
+            sendBtn.disabled = true;
+            sendBtn.textContent = '> ENVOI EN COURS...';
+        }
+
+        fetch('https://formspree.io/f/xqeorzyr', {
+            method: 'POST',
+            body: JSON.stringify({
+                "Devis": devisNum,
+                "Nom": safeNom,
+                "Email": safeEmail,
+                "Modèle(s)": modeles.map(function(m){ return m.label; }).join(', ') || 'Aucun modèle sélectionné',
+                "Options": optionsRaw.length > 0 ? optionsRaw.map(function(o){ return o.label; }).join(', ') : "Aucune",
+                "Total": totalStr,
+                "Message": safeMsg || "Aucun",
+                "Date": dateStr
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(function(response) {
+            if (response.ok) {
+                document.getElementById('rs-form-card').style.display = 'none';
+                document.getElementById('rs-success').style.display = 'block';
+            } else {
+                throw new Error('Réponse Formspree non OK');
+            }
+        })
+        .catch(function() {
+            if (sendBtn) {
+                sendBtn.disabled = false;
+                sendBtn.textContent = '> GÉNÉRER LE DEVIS & ENVOYER PAR MAIL';
+            }
+            alert("Le devis a été généré mais l'envoi automatique a échoué. Veuillez envoyer le PDF manuellement à contact.retrosaudade@gmail.com.");
+        });
     }
 
     /* ─── PHOTOS PRODUITS ─── */
